@@ -1,0 +1,12 @@
+# 统一换行符为 LF，免得在 Windows 上 diff 全是 CRLF 噪音
+* text=auto eol=lf
+
+# 二进制文件别做任何转换
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.exe  binary
+*.mp3  binary
+*.m4a  binary
+*.mp4  binary
+*.wav  binary

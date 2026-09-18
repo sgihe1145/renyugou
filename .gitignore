@@ -1,0 +1,13 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+
+# ---- 打包中间产物 / 自检截图（tools 里的脚本都能重新生成）----
+build/
+
+# ---- 本机 AI 助手的工作目录，不属于项目源码 ----
+.workbuddy/
+
+# ---- 授权流程的临时文件，切勿提交 ----
+tools/_device.json
+tools/_token*
