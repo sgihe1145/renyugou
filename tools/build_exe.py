@@ -11,8 +11,8 @@
 
 想换立绘：改 tools/build_assets.py 的 SHEETS 路径，然后重跑本脚本即可。
 想换启动图标：SHEETS 里的第一条（COVER_PNG）同时用来生成 exe 图标，换它即可。
-想改音效：裁剪点写在 tools/cut_audio.py 的 CLIPS，先跑
-          python tools/cut_audio.py 生成 build/audio/*.wav，再跑本脚本。
+想改音效：四段音效已经裁好并随仓库提交在 media/audio 下，直接替换同名 PCM WAV 即可
+          （22050Hz / 单声道 / 16bit），再跑本脚本；不需要本机装 ffmpeg。
           片段名与触发时机在 src/app.py 的 SOUND_WAV / play_sound()。
 想加互动按钮：改 src/app.py 的 BTN_DEFS（文件上部），补 MSG_TEXTS / CAPTIONS / MSG_COLORS，
             若要加减数值再补一条 DELTAS；布局常量 OPS_CARD 高度与 BTN_GAP 按行数调。

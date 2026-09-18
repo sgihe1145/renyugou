@@ -6,7 +6,7 @@ import wave
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "media", "欸？大狗！ [BV1xyJA6BEBN].mp3")
-AUDIO = os.path.join(ROOT, "build", "audio")
+AUDIO = os.path.join(ROOT, "media", "audio")
 OUT = os.path.join(ROOT, "build", "_verify_audio.txt")
 
 EXPECT = {
