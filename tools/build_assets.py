@@ -5,7 +5,8 @@
 缩放后肉眼无差别，但能把 exe 体积压下来）。
 
 音效说明：运行期用 winsound.PlaySound(SND_MEMORY|SND_ASYNC) 播放，
-必须是 PCM WAV。由 tools/cut_audio.py 从原曲中裁出，放在 build/audio 下。
+必须是 PCM WAV。四段音效已经裁好并随仓库提交，放在 media/audio 下，
+构建期直接读取，不需要本机装 ffmpeg。
 """
 import base64
 import io
@@ -32,14 +33,22 @@ SHEETS = [
     ("BASKET_ANGRY_PNG", os.path.join(S, "basket_angry.png")),
 ]
 
-# 音效：常量名 <- build/audio 下的 PCM WAV
+# 音效：常量名 <- media/audio 下的 PCM WAV
 SOUNDS = [
     ("SOUND_OPEN_WAV", "open_intro.wav"),      # 启动：「欸，大狗！」
     ("SOUND_READ_WAV", "read.wav"),            # 读书：「哒哒哒哒哒」
     ("SOUND_EAT_WAV", "eat.wav"),              # 吃饭：「叫叫叫！」
     ("SOUND_BASKET_WAV", "basket.wav"),        # 打篮球：「大狗大狗」
 ]
-AUDIO_DIR = os.path.join(BUILD_DIR, "audio")
+AUDIO_DIR = os.path.join(ROOT, "media", "audio")
+
+# 这四段是从原曲裁好的成品，切点记在这里备查（原流程做了 fade in 0.03s / fade out 0.12s，
+# 并转成 22050Hz 单声道 16bit PCM）。想换音效：把同名 PCM WAV 覆盖到 media/audio 下即可，
+# 不用再装 ffmpeg 重新裁。
+#   open_intro  0.80s + 1.20s   启动「欸，大狗！」
+#   read        2.22s + 1.68s   读书「哒哒哒哒哒」
+#   eat         5.35s + 1.13s   吃饭「叫叫叫！」
+#   basket      8.55s + 0.90s   打篮球「大狗叫叫」
 
 
 def pack(path):
@@ -100,8 +109,8 @@ def main():
     for name, fname in SOUNDS:
         path = os.path.join(AUDIO_DIR, fname)
         if not os.path.exists(path):
-            log.append("%-17s !! 缺失，跳过：%s" % (name, path))
-            continue
+            raise SystemExit("缺少音效素材：%s\n（这些 WAV 随仓库提交在 media/audio 下，"
+                             "缺失说明工作区不完整）" % path)
         with open(path, "rb") as f:
             raw = f.read()
         lines.append("%s = %r" % (name, base64.b64encode(raw).decode("ascii")))
